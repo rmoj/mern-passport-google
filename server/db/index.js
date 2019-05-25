@@ -1,16 +1,13 @@
-/* Mongo Database
-* - this is where we set up our connection to the mongo database
-*/
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 let MONGO_URL
 const MONGO_LOCAL_URL = 'mongodb://localhost/mern-passport-google'
 
 if (process.env.MONGODB_URI) {
-	mongoose.connect(process.env.MONGODB_URI)
+	mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useCreateIndex: true })
 	MONGO_URL = process.env.MONGODB_URI
 } else {
-	mongoose.connect(MONGO_LOCAL_URL) // local mongo url
+	mongoose.connect(MONGO_LOCAL_URL, { useNewUrlParser: true, useCreateIndex: true }) // local mongo url
 	MONGO_URL = MONGO_LOCAL_URL
 }
 

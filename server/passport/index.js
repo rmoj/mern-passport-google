@@ -1,5 +1,4 @@
 const passport = require('passport')
-// const LocalStrategy = require('./localStrategy')
 const GoogleStratgey = require('./googleStrategy')
 const User = require('../db/models/user')
 
@@ -14,7 +13,6 @@ passport.deserializeUser((id, done) => {
 	console.log('DEserialize ... called')
 	User.findOne(
 		{ _id: id },
-		// 'firstName lastName photos local.username',
 		'firstName',
 		(err, user) => {
 			console.log('======= DESERIALIZE USER CALLED ======')
@@ -25,8 +23,6 @@ passport.deserializeUser((id, done) => {
 	)
 })
 
-// ==== Register Strategies ====
-// passport.use(LocalStrategy)
 passport.use(GoogleStratgey)
 
 module.exports = passport
