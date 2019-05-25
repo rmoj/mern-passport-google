@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Route, Link } from 'react-router-dom'
 import './App.css'
 import LoginForm from './components/Login/LoginForm'
-import SignupForm from './components/SignupForm'
+// import SignupForm from './components/SignupForm'
 import Header from './components/Header'
 import Home from './components/Home'
 
@@ -39,11 +39,11 @@ const DisplayLinks = props => {
 							login
 						</Link>
 					</li>
-					<li className="nav-item">
+					{/* <li className="nav-item">
 						<Link to="/signup" className="nav-link">
 							sign up
 						</Link>
-					</li>
+					</li> */}
 				</ul>
 			</nav>
 		)
@@ -58,7 +58,7 @@ class App extends Component {
 			user: null
 		}
 		this._logout = this._logout.bind(this)
-		this._login = this._login.bind(this)
+		// this._login = this._login.bind(this)
 	}
 	componentDidMount() {
 		axios.get('/auth/user').then(response => {
@@ -92,35 +92,32 @@ class App extends Component {
 		})
 	}
 
-	_login(username, password) {
-		axios
-			.post('/auth/login', {
-				username,
-				password
-			})
-			.then(response => {
-				console.log(response)
-				if (response.status === 200) {
-					// update the state
-					this.setState({
-						loggedIn: true,
-						user: response.data.user
-					})
-				}
-			})
-	}
+	// _login(username, password) {
+	// 	axios
+	// 		.post('/auth/login', {
+	// 			username,
+	// 			password
+	// 		})
+	// 		.then(response => {
+	// 			console.log(response)
+	// 			if (response.status === 200) {
+	// 				// update the state
+	// 				this.setState({
+	// 					loggedIn: true,
+	// 					user: response.data.user
+	// 				})
+	// 			}
+	// 		})
+	// }
 
 	render() {
 		return (
 			<div className="App">
-				<h1>This is the main App component</h1>
+				<h1>MERN-Passport-Google</h1>
 				<Header user={this.state.user} />
-				{/* LINKS to our different 'pages' */}
 				<DisplayLinks _logout={this._logout} loggedIn={this.state.loggedIn} />
-				{/*  ROUTES */}
-				{/* <Route exact path="/" component={Home} /> */}
 				<Route exact path="/" render={() => <Home user={this.state.user} />} />
-				<Route
+				{/* <Route
 					exact
 					path="/login"
 					render={() =>
@@ -128,9 +125,14 @@ class App extends Component {
 							_login={this._login}
 							_googleSignin={this._googleSignin}
 						/>}
+				/> */}
+				<Route
+					exact
+					path="/login"
+					render={() =>
+						<LoginForm />}
 				/>
-				<Route exact path="/signup" component={SignupForm} />
-				{/* <LoginForm _login={this._login} /> */}
+				{/* <Route exact path="/signup" component={SignupForm} /> */}
 			</div>
 		)
 	}
