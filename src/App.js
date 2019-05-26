@@ -17,7 +17,7 @@ const DisplayLinks = props => {
 						</Link>
 					</li>
 					<li>
-						<Link to="#" className="nav-link" onClick={props._logout}>
+						<Link to="#" className="nav-link" onClick={props.logout}>
 							Logout
 						</Link>
 					</li>
@@ -45,14 +45,12 @@ const DisplayLinks = props => {
 }
 
 class App extends Component {
-	constructor() {
-		super()
-		this.state = {
-			loggedIn: false,
-			user: null
-		}
-		this._logout = this._logout.bind(this)
+
+	state = {
+		loggedIn: false,
+		user: null
 	}
+
 	componentDidMount() {
 		axios.get('/auth/user').then(response => {
 			console.log(response.data)
@@ -71,8 +69,8 @@ class App extends Component {
 		})
 	}
 
-	_logout(event) {
-		event.preventDefault()
+	logout = () => {
+
 		console.log('logging out')
 		axios.post('/auth/logout').then(response => {
 			console.log(response.data)
@@ -90,14 +88,9 @@ class App extends Component {
 			<div className="App">
 				<h1>MERN-Passport-Google</h1>
 				<Header user={this.state.user} />
-				<DisplayLinks _logout={this._logout} loggedIn={this.state.loggedIn} />
+				<DisplayLinks logout={this.logout} loggedIn={this.state.loggedIn} />
 				<Route exact path="/" render={() => <Home user={this.state.user} />} />
-				<Route
-					exact
-					path="/login"
-					render={() =>
-						<LoginForm />}
-				/>
+				<Route exact path="/login" component={LoginForm} />
 			</div>
 		)
 	}
